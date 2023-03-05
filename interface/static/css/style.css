@@ -1,0 +1,19 @@
+body {
+    background-color: #FFFFFF;
+}
+
+label {
+    color: grey;
+}
+
+input {
+    text-align: right;
+}
+
+.nav-pills .nav-link.actie {
+    background-color: #696969 !important;
+}
+
+a {
+    color: #696969;
+}

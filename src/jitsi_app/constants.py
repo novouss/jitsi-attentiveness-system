@@ -3,6 +3,8 @@
     ~~~~~~~~~
 """
 
+import os
+
 # CONSTANTS
 AUTHORS = [
     'R.Gorospe', 
@@ -81,3 +83,9 @@ HTTP_511_NETWORK_AUTHENTICATION_REQUIRED = 511
 # Path Constants
 MODEL_FOLDER = 'sign_recognition/'
 MODEL_NAME = 'keypoint_classification.tflite'
+MODEL_DB = 'classes.csv'
+MODEL = os.path.join(MODEL_FOLDER, MODEL_NAME)
+MODEL_CLASS = os.path.join(MODEL_FOLDER, MODEL_DB)
+
+TEMPLATES_FOLDER = 'interface/templates/'
+STATIC_FOLDER = 'interface/static/'
