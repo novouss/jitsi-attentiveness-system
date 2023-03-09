@@ -17,15 +17,10 @@ hands = mp_hands.Hands(
     min_tracking_confidence = 0.5,
 )
 
-with open(MODEL_CLASS) as file:
-    keypoint_classifier_labels = csv.reader(file)
-    keypoint_classifier_labels = [row[0] for row in keypoint_classifier_labels]
-
 class KeypointClassifier(object):
     def __init__(self, model_path, class_path, num_threads=1):
 
-        self.interpreter = tf.lite.Interpreter(model_path=model_path,
-                                               num_threads=num_threads)
+        self.interpreter = tf.lite.Interpreter(model_path=model_path, num_threads=num_threads)
 
         with open(class_path) as file:
             self.class_labels = csv.reader(file)
@@ -56,6 +51,8 @@ class KeypointClassifier(object):
 
             sign_id = self.results([hand_orientation] + pre_processed_landmark_list)
             return self.class_labels[sign_id]
+        
+        return 'Hand undetected'
 
     def calc_landmarks(image, hand_landmarks):
         w, h = image.shape[1], image.shape[0]

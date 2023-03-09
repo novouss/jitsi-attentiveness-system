@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 
 <div class="row container-fluid py-4 d-flex justify-content-center">
-    <div id="id_div_btn_start_comparing" class="col-6" hidden>
-        <button id="btn_start_comparing" type="button" cless="btn btn-outline-success btn-block">Start</button>
-    </div>
-    <div id="id_div_btn_finish_comparing" class="col-6" hidden>
-        <button id="btn_finish_comaparing" type="button" class="btn btn-outline-danger btn-block">Stop</button>
+    <div id="id_div_btn_acquire_frame" class="col" hidden>
+        <button id="btn_acquire_frame" type="button" class="btn btn-outline-success">Record frame and classify hand sign</button>
     </div>
 </div>
-
-<div id="id_div_results" class="row container-fluid pb-1" hidden>
+<div id="id_div_results_sign_recognition" class="row container-fluid pb-1" hidden>
     <div class="row py-1 mx-1">
-        <p id="p_status_comparison" class="font-weight-ligt font-italic text-right">Not running...</p>
+        <p id="p_status_recognition" class="font-weight-light font-italic text-right">Not running...</p>
     </div>
     <div class="row d-flex py-1 mx-1">
-        <label for="input_result"><b>Current Result</b></label>
-        <input type="text" class="form-control input-sm" id="input_result" value="%" readonly> 
+        <label for="input_result_recog"><b>Sign Classification</b></label>
+        <input type="text" class="form-control input-sm" id="input_sign_classification" value="" readonly>
     </div>
 </div>
-
-<div id="id_div_rest" class="row container-fluid py-3" hidden>
-    <div id="id_div_btn_reset_2" class="col d-flex justify-content-end">
-        <button id="btn_rest" type="button" class="btn btn-outline-dark">Rest</button>
+<div id="id_div_btn_reset_sign_recognition" class="row container-fluid py-3" hidden>
+    <div id="id_div_btn_reset_sign_recognition_2" class="col d-flex justify-content-end">
+        <button id="btn_reset_sign_recognition" type="button" class="btn btn-outline-dark">Reset</button>
     </div>
 </div>

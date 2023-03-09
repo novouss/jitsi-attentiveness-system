@@ -81,8 +81,8 @@ HTTP_510_NOT_EXTENDED = 510
 HTTP_511_NETWORK_AUTHENTICATION_REQUIRED = 511
 
 # Path Constants
-MODEL_FOLDER = 'sign_recognition/'
-MODEL_NAME = 'keypoint_classification.tflite'
+MODEL_FOLDER = 'src/sign_recognition/'
+MODEL_NAME = 'keypoint_classifier.tflite'
 MODEL_DB = 'classes.csv'
 MODEL = os.path.join(MODEL_FOLDER, MODEL_NAME)
 MODEL_CLASS = os.path.join(MODEL_FOLDER, MODEL_DB)

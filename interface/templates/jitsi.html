@@ -5,34 +5,36 @@
 
 {% block content %}
 
-    <div id=""div_containter_of_body_elements" class="row pt-2">
-        <div id="div_iframe_jitsi" class="col-10"></div> <!-- Jitsi runs here -->
+    <div id="div_container_of_body_elements" class="row pt-2">
+        <div id="div_iframe_jitsi" class="col-10"></div>
+        <!-- Jitsi runs here -->
         <div class="container col-2">
             <div id="id_div_btn_start_jitsi" class="col d-flex justify-content-center">
                 <button id="btn_init_jitsi" type="button" class="btn btn-outline-primary">Start Jitsi Conference</button>
             </div>
-        </div>
-        <ul class="nav nav-pills mb-3" id="ul_navs_index" role="tablist" hidden>
-            <li class="nav-item" role="presentation" data-toggle="tooltip" data-placement="bottom" title="Attentive System (AS)">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#sign-recog" role="tab" aria-controls="sign_recog" aria-selecte="true">AS</a>
-            </li>
-            <li class="nav-item" role="presentation" data-toggle="tooltip" data-placement="bottom" title="Randomizer Sign (RS)">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#rand_sign" role="tab" aria-controls="rand_sign" aria-seclected="false">RS</a>
-            </li>
-        </ul>
-        <div class="tab=content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="sign_recog" role="tabpanel" aria-labelledby="pills-home-tab">
-                {% include "sign_recognition.html" %}
-            </div>
-            <div class="tab-pane fade" id="rand_sign_recog" role="tabpanel" aria-labelledby="pills-profile-tab">
-                {% include "rand_sign_recognition.html" %}
+        
+            <ul class="nav nav-pills mb-3" id="ul_navs_index" role="tablist" hidden>
+                <li class="nav-item" role="presentation" data-toggle="tooltip" data-placement="bottom" title="Attentive System (AS)">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#sign-recog" role="tab" aria-controls="sign_recog" aria-selected="true">AS</a>
+                </li>
+                <li class="nav-item" role="presentation" data-toggle="tooltip" data-placement="bottom" title="Randomized Sign (RS)">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#rand_sign" role="tab" aria-controls="rand_sign" aria-selected="false">RS</a>
+                </li>
+            </ul>
+            <div class="tab=content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="sign_recog" role="tabpanel" aria-labelledby="pills-home-tab">
+                    {% include "sign_recognition.html" %}
+                </div>
+                <div class="tab-pane fade" id="rand_sign_recog" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    {% include "rand_sign_recognition.html" %}
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        $(document).read(function() {
-            toggle_activate_bootsrap()
+        $(document).ready(function () {
+            toggle_activate_bootstrap()
             init_jitsi_config()
         })
     </script>
