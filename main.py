@@ -1,6 +1,11 @@
 
 from flask import Flask, request, render_template
 
+# import urllib
+import base64
+import cv2 as cv
+import numpy as np
+
 from src.jitsi_app import jitsi_app
 from src.jitsi_app.constants import *
 
@@ -11,6 +16,21 @@ app = Flask(__name__, template_folder=TEMPLATES_FOLDER, static_folder=STATIC_FOL
 sign_recognition = KeypointClassifier(model_path=MODEL, class_path=MODEL_CLASS)
 
 jitsi_application = jitsi_app.JitsiApp()
+
+def url_to_image(url):
+
+    # with urllib.request.urlopen(url) as resp:
+    #     image = np.asarray(bytearray(resp.read()), dtype="uint8")
+    #     image = cv.imdecode(image, -1)
+
+    # Extract image data from data URL
+    img_data = base64.b64decode(url.split(',')[1])
+
+    # Decode image data using OpenCV
+    img_array = np.frombuffer(img_data, np.uint8)
+    image = cv.imdecode(img_array, cv.IMREAD_COLOR)
+
+    return image
 
 @app.after_request
 def add_header(r):
@@ -38,20 +58,27 @@ def get_sign_classification():
     }
     
     try:
-        
+        # print(request.form['dataURL_frame'])
+
         if 'dataURL_frame' in request.form.keys():
             data_url_frame = request.form['dataURL_frame']
-            classification = sign_recognition(data_url_frame)
+            image = url_to_image(data_url_frame)
+            # cv.imshow("image", image)
+            # cv.waitKey(0)
+            # help = cv.imencode('.png', image)
 
+            classification = sign_recognition(image)
+            
             content = {
                 'log': 'Sign Identified',
                 'sign_classification': classification,
                 'status': True,
             }
+        
         return content, HTTP_200_OK 
     
     except Exception as e:
-        # print(str(e))
+        print(str(e))
         content = {
             'log': str(e),
             'sign_classification': None,    

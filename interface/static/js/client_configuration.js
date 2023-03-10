@@ -16,12 +16,14 @@ function initJitsi() {
 }
 
 function init_jitsi_config() {
-    $("#btn_init_jitsi").click(function () {
-        $("#id_div_btn_start_jitsi").remove();
-        $("#ul_navs_index").prop("hidden", false);
-        $("#id_div_btn_acquire_frame").prop("hidden", false);
-        initJitsi()
-    })
+    // $("#btn_init_jitsi").click(function () {
+    //     $("#id_div_btn_start_jitsi").remove();
+    //     initJitsi()
+    // })
+    
+    $("#ul_navs_index").prop("hidden", false);
+    $("#id_div_btn_acquire_frame").prop("hidden", false);
+    initJitsi()
 
     $("#btn_acquire_frame").click(function() {
         for (var b in window) {
@@ -32,18 +34,12 @@ function init_jitsi_config() {
                         $("#id_div_results_sign_recognition").prop("hidden", false);
                         $("#p_status_recognition").text('Identifying...');
                         $("#id_div_btn_reset_sign_recognition").prop("hidden", false);
-                        captureScreenShot('sign_classification');   
+                        captureScreenShot('sign_classification');
                     }
                 })
             }
         }
     })
-
-    $("#btn_finish_comparing").click(function() {
-        start_capturing_add_requesting = false;
-        $("#p_status_comparison").text('Not running...');
-    })
-
 }
 
 function captureScreenShot(which_application) {

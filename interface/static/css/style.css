@@ -1,10 +1,9 @@
 body {
-    background-color: #FFFFF7;
+    background-color: #2F2F2F;
 }
 
 label {
-    /*color: azure;*/
-    color: grey;
+    color: #F2F3F4;
 }
 
 input {
@@ -12,9 +11,13 @@ input {
 }
 
 .nav-pills .nav-link.active {
-    background-color: #696969 !important;
+    background-color: #000000 !important;
 }
 
 a {
-    color: #696969
+    color: #FFFFFF
+}
+
+.p-status {
+    color: #F2F3F4
 }

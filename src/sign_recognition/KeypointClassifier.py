@@ -30,10 +30,14 @@ class KeypointClassifier(object):
         self.input_details = self.interpreter.get_input_details()
         self.output_details = self.interpreter.get_output_details()
 
-    def __call__(self, frame):
+    def __call__(self, video_frame):
 
-        frame = cv.flip(cv.imread(frame), 1)
-        image = copy.deepcopy(frame)
+        # frame = cv.imread(video_frame, 1)
+        _, encoded_img = cv.imencode('.png', video_frame)
+        decoded_img = cv.imdecode(encoded_img, cv.IMREAD_ANYCOLOR)
+        
+        frame = cv.flip(decoded_img, 1)
+        image = copy.deepcopy(decoded_img)
         frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
         results = hands.process(frame)
@@ -49,12 +53,12 @@ class KeypointClassifier(object):
                 hand_orientation = self.process_handedness(handedness)
                 # print(hand_orientation)
 
-            sign_id = self.results([hand_orientation] + pre_processed_landmark_list)
+            sign_id = self.result([hand_orientation] + pre_processed_landmark_list)
             return self.class_labels[sign_id]
         
         return 'Hand undetected'
 
-    def calc_landmarks(image, hand_landmarks):
+    def calc_landmarks(self, image, hand_landmarks):
         w, h = image.shape[1], image.shape[0]
         
         landmark_points = []
@@ -67,7 +71,7 @@ class KeypointClassifier(object):
 
         return landmark_points
 
-    def pre_process_landmark(landmark_list):
+    def pre_process_landmark(self, landmark_list):
         temp_landmark_list = copy.deepcopy(landmark_list)
 
         base_x, base_y = 0, 0
@@ -85,7 +89,7 @@ class KeypointClassifier(object):
 
         return temp_landmark_list
     
-    def process_handedness(handedness):
+    def process_handedness(self, handedness):
         return 0 if handedness.classification[0].label == 'Left' else 1
 
     def result(self, landmark_list):
