@@ -18,15 +18,16 @@ function send_frame_sign_classification(dataFrame) {
             let error_message;
             switch (status) {
                 case 200:
-                    $("#btn_acquire_frame").prop('disabled', false);
                     if (response['status']) {
                         $('#input_sign_classification').attr('value', response['sign_classification']);
+                    }
+
+                    if (start_capturing_and_requesting) {
+                        captureScreenShot('sign_classification')
                     }
                     break;
                 case 205:
                     reset_sign_classification()
-                    $("#p_status_recognition").text('Stopped and not running...');
-                    $("#btn_acquire_frame").prop('disabled', false);
                     break;
                 default:
                     console.log(response['log'])
@@ -52,8 +53,6 @@ function reset_sign_classification() {
             switch (status) {
                 case 200:
                     $('#input_sign_classification').attr('value', "");
-                    $("#p_status_recognition").text('Stopped and not running...');
-                    $("#btn_acquire_frame").prop('disabled', false);
                     break;
                 default:
                     break;

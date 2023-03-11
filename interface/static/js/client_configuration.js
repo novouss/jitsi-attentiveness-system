@@ -22,23 +22,24 @@ function init_jitsi_config() {
     // })
     
     $("#ul_navs_index").prop("hidden", false);
-    $("#id_div_btn_acquire_frame").prop("hidden", false);
+    $("#id_div_sign_recognition").prop("hidden", false);
     initJitsi()
 
-    $("#btn_acquire_frame").click(function() {
+    $("#btn_start_comparing").click(function() {
         for (var b in window) {
-
             if (b === 'api_jitsi') {
                 api_jitsi.isVideoAvailable().then(available => {
                     if (api_jitsi.getParticipantsInfo().length !== 0) {
-                        $("#id_div_results_sign_recognition").prop("hidden", false);
-                        $("#p_status_recognition").text('Identifying...');
-                        $("#id_div_btn_reset_sign_recognition").prop("hidden", false);
+                        start_capturing_and_requesting = true;
                         captureScreenShot('sign_classification');
                     }
                 })
             }
         }
+    })
+
+    $("#btn_stop_comparing").click(function() {
+        start_capturing_and_requesting = false;
     })
 }
 

@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 
-<div class="row container-fluid py-4 d-flex justify-content-center">
-    <div id="id_div_btn_acquire_frame" class="col" hidden>
-        <button id="btn_acquire_frame" type="button" class="btn btn-outline-success">Record frame and classify hand sign</button>
+<div id="id_div_sign_recognition" hidden>
+    <div class="row container-fluid py-4 d-flex justify-content-center">
+        <div id="id_div_btn_start_comparing" class="col-6">
+            <button id="btn_start_comparing" type="button" class="btn btn-outline-success btn-block">Start</button>
+        </div>
+        <div id="id_div_btn_stop_comparing" class="col-6">
+            <button id="btn_stop_comparing" type="button" class="btn btn-outline-danger btn-block">Stop</button>
+        </div>
     </div>
-</div>
-<div id="id_div_results_sign_recognition" class="row container-fluid pb-1" hidden>
-    <div class="row py-1 mx-1">
-        <p id="p_status_recognition" class="p-status font-weight-light font-italic text-right">Not running...</p>
-    </div>
-    <div class="row d-flex py-1 mx-1">
-        <label for="input_result_recog"><b>Sign Recognition</b></label>
-        <input type="text" class="form-control input-sm" id="input_sign_classification" value="" readonly>
-    </div>
-</div>
-<div id="id_div_btn_reset_sign_recognition" class="row container-fluid py-3" hidden>
-    <div id="id_div_btn_reset_sign_recognition_2" class="col d-flex justify-content-end">
-        <button id="btn_reset_sign_recognition" type="button" class="btn btn-outline-dark">Reset</button>
+    <div id="id_div_results_sign_recognition" class="row container-fluid pb-1">
+        <div class="row d-flex py-1 mx-1">
+            <label for="input_result_recog"><b>Sign Classification</b></label>
+            <input type="text" class="form-control input-sm" id="input_sign_classification" value="" readonly>
+        </div>
     </div>
 </div>
