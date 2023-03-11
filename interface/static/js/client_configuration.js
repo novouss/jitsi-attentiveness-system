@@ -16,13 +16,8 @@ function initJitsi() {
 }
 
 function init_jitsi_config() {
-    // $("#btn_init_jitsi").click(function () {
-    //     $("#id_div_btn_start_jitsi").remove();
-    //     initJitsi()
-    // })
     
     $("#ul_navs_index").prop("hidden", false);
-    $("#id_div_sign_recognition").prop("hidden", false);
     initJitsi()
 
     $("#btn_start_comparing").click(function() {
@@ -37,8 +32,32 @@ function init_jitsi_config() {
             }
         }
     })
+    
+    $("#btn_start_rand_comparing").click(function() {
+        for (var b in window) {
+            if (b === 'api_jitsi') {
+                api_jitsi.isVideoAvailable().then(available => {
+                    if (api_jitsi.getParticipantsInfo().length !== 0) {
+                        start_capturing_and_requesting = true;
+
+                        class_number = Math.floor(Math.random() * 10);
+                        send_sign_label(class_number);
+                        captureScreenShot('rand_sign_classification');
+                    }
+                })
+            }
+        }
+    })
 
     $("#btn_stop_comparing").click(function() {
+        start_capturing_and_requesting = false;
+    })    
+    
+    $("#btn_stop_rand_comparing").click(function() {
+        $('#input_rand_sign_classification').css({
+            "background-color": "red",
+            "color": "white",
+        });
         start_capturing_and_requesting = false;
     })
 }
@@ -50,6 +69,7 @@ function captureScreenShot(which_application) {
         if (which_application === 'sign_classification') {
             send_frame_sign_classification(dataFrame);
         } else if (which_application === 'rand_sign_classification') {
+            // TODO: Add dynamic size
             send_frame_rand_sign_classification(dataFrame)
         }
     });

@@ -19,83 +19,114 @@ jitsi_application = jitsi_app.JitsiApp()
 
 def url_to_image(url):
 
-    # with urllib.request.urlopen(url) as resp:
-    #     image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    #     image = cv.imdecode(image, -1)
+	img_data = base64.b64decode(url.split(',')[1])
 
-    # Extract image data from data URL
-    img_data = base64.b64decode(url.split(',')[1])
+	img_array = np.frombuffer(img_data, np.uint8)
+	image = cv.imdecode(img_array, cv.IMREAD_COLOR)
 
-    # Decode image data using OpenCV
-    img_array = np.frombuffer(img_data, np.uint8)
-    image = cv.imdecode(img_array, cv.IMREAD_COLOR)
-
-    return image
+	return image
 
 @app.after_request
 def add_header(r):
-    """
-    Add header to disable cache
-    """
+	"""
+	Add header to disable cache
+	"""
 
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    return r
+	r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+	r.headers["Pragma"] = "no-cache"
+	r.headers["Expires"] = "0"
+	return r
 
 @app.route('/')
 @app.route('/index')
 def jitsi_app():
-    return render_template('jitsi.html')
+	return render_template('jitsi.html')
+
+@app.route('/get_sign_label', methods=['POST'])
+def get_sign_label():
+
+	content = {
+		'log': 'Unknown Sign',
+		'sign_label': None,
+		'sign_class': None,
+		'status': False,
+	}
+	
+	try:      
+		if 'number' in request.form.keys():
+
+			index = request.form['number']
+			label = sign_recognition.get_class_labels(int(index))                        
+
+			content = {
+				'log': 'Sign Label Identified',
+				'sign_label': label,
+				'sign_class': None,
+				'status': True,
+			}
+
+			return content, HTTP_200_OK
+
+		return content, HTTP_205_RESET_CONTENT
+	
+	except Exception as e:
+		print(str(e))
+		content = {
+			'log': 'get_sign_label' + str(e),
+			'sign_label': None,    
+			'sign_class': None,
+			'status': False,
+		}
+		return content, HTTP_205_RESET_CONTENT
 
 @app.route('/get_sign_classification', methods=['GET', 'POST'])
 def get_sign_classification():
 
-    content = {
-        'log': 'Unknown Sign',
-        'sign_classification': None,
-        'status': False,
-    }
-    
-    try:
-        # print(request.form['dataURL_frame'])
+	content = {
+		'log': 'Unknown Sign',
+		'sign_label': None,
+		'sign_class': None,
+		'status': False,
+	}
+	
+	try:
 
-        if 'dataURL_frame' in request.form.keys():
-            data_url_frame = request.form['dataURL_frame']
-            image = url_to_image(data_url_frame)
-            # cv.imshow("image", image)
-            # cv.waitKey(0)
-            # help = cv.imencode('.png', image)
+		if 'dataURL_frame' in request.form.keys():
+			data_url_frame = request.form['dataURL_frame']
+			image = url_to_image(data_url_frame)
 
-            classification = sign_recognition(image)
-            
-            content = {
-                'log': 'Sign Identified',
-                'sign_classification': classification,
-                'status': True,
-            }
-        
-        return content, HTTP_200_OK 
-    
-    except Exception as e:
-        print(str(e))
-        content = {
-            'log': str(e),
-            'sign_classification': None,    
-            'status': False,
-        }
-        return content, HTTP_205_RESET_CONTENT
+			label, index = sign_recognition(image)
+			
+			content = {
+				'log': 'Sign Identified',
+				'sign_label': label,
+				'sign_class': str(index),
+				'status': True,
+			}
+		
+		return content, HTTP_200_OK 
+	
+	except Exception as e:
+		print(str(e))
+		content = {
+			'log': '[get_sign_classification]' + str(e),
+			'sign_label': None,    
+			'sign_class': None,
+			'status': False,
+		}
+		return content, HTTP_205_RESET_CONTENT
 
 @app.route('/reset_sign_classification', methods=['GET'])
 def reset_sign_classification():
 
-    content = {
-        'log': 'Reset correctly performed',
-        'sign_classification': None,
-        'status': False,
-    }
+	content = {
+		'log': 'Reset correctly performed',
+		'sign_label': None,
+		'sign_class': None,
+		'status': False,
+	}
 
-    return content, HTTP_200_OK
+	return content, HTTP_200_OK
 
 if __name__ == '__main__':
-    app.run()
+	app.run()
