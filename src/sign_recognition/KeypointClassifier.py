@@ -54,9 +54,9 @@ class KeypointClassifier(object):
                 # print(hand_orientation)
 
             sign_id = self.result([hand_orientation] + pre_processed_landmark_list)
-            return self.class_labels[sign_id]
+            return self.class_labels[sign_id], sign_id
         
-        return 'Hand undetected'
+        return 'Hand undetected', -1
 
     def calc_landmarks(self, image, hand_landmarks):
         w, h = image.shape[1], image.shape[0]
@@ -91,6 +91,9 @@ class KeypointClassifier(object):
     
     def process_handedness(self, handedness):
         return 0 if handedness.classification[0].label == 'Left' else 1
+
+    def get_class_labels(self, index):
+        return self.class_labels[index]
 
     def result(self, landmark_list):
         input_details_tensor_index = self.input_details[0]['index']
