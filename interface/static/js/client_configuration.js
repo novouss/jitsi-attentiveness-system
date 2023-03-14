@@ -17,7 +17,8 @@ function initJitsi() {
 
 function init_jitsi_config() {
     
-    $("#ul_navs_index").prop("hidden", false);
+    disable_debug_panel()
+    // $("#ul_navs_index").prop("hidden", false);
     initJitsi()
 
     $("#btn_start_comparing").click(function() {
@@ -62,6 +63,29 @@ function init_jitsi_config() {
     })
 }
 
+function enable_floating_webcam() {
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+        // Display the webcam stream on the canvas
+        var video = document.getElementById('webcam-video');
+        video.srcObject = stream;
+        video.onloadedmetadata = function(e) {
+        video.play();
+        };
+    })
+    .catch(function(err) {
+        console.log("Error accessing webcam: " + err);
+    });
+
+    $("#webcam-popup").draggable();
+
+    $('#close-webcam-popup').click(function() {
+        $('#webcam-popup').hide();
+    });
+
+}
+
 function captureScreenShot(which_application) {
     let screenShot = api_jitsi.captureLargeVideoScreenshot().then(dataURL => {
         let dataFrame = dataURL.dataURL
@@ -73,4 +97,11 @@ function captureScreenShot(which_application) {
             send_frame_rand_sign_classification(dataFrame)
         }
     });
+}
+
+function enable_debug_panel(){
+    $("#debugging_panel").prop("hidden", false)
+} 
+function disable_debug_panel(){
+    $("#debugging_panel").prop("hidden", true)
 }

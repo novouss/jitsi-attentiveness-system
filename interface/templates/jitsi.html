@@ -5,11 +5,11 @@
 
 {% block content %}
 
-    <div id="div_container_of_body_elements" class="row pt-2">
-        <div id="div_iframe_jitsi" class="col-10"></div>
+    <div id="div_container_of_body_elements" class="row" >
+        <div id="div_iframe_jitsi" class="container-fluid vw-100"></div>
         <!-- Jitsi runs here -->
-        <div class="container col-2">
-            <ul class="nav nav-pills mb-3" id="ul_navs_index" role="tablist" hidden>
+        <div class="container col-2" id="debugging_panel" hidden>
+            <ul class="nav nav-pills mb-3" id="ul_navs_index" role="tablist">
                 <li class="nav-item" role="presentation" data-toggle="tooltip" data-placement="bottom" title="Attentive System (AS)">
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#sign_recog" role="tab" aria-controls="sign_recog" aria-selected="true">SR</a>
                 </li>
@@ -28,10 +28,17 @@
         </div>
     </div>
 
+    <div id="webcam-popup" class="ui-widget-content">
+        <video id="webcam-video" autoplay></video>
+        <button id="close-webcam-popup">x</button>
+    </div>
+
     <script>
         $(document).ready(function () {
-            toggle_activate_bootstrap()
-            init_jitsi_config()
+            toggle_activate_bootstrap() // Bootstrap
+            enable_floating_webcam()
+            init_jitsi_config() // Jitsi Init
+            
         })
     </script>
 
