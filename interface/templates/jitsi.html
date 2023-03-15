@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div id="webcam-popup" class="ui-widget-content">
+    <div id="webcam-popup" class="ui-widget-content" hidden>
         <video id="webcam-video" autoplay></video>
         <button id="close-webcam-popup">x</button>
     </div>
@@ -36,7 +36,6 @@
     <script>
         $(document).ready(function () {
             toggle_activate_bootstrap() // Bootstrap
-            enable_floating_webcam()
             init_jitsi_config() // Jitsi Init
             
         })

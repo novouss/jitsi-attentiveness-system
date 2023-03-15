@@ -53,14 +53,16 @@ function send_frame_sign_classification(dataFrame) {
                     }
 
                     if (start_capturing_and_requesting) {
-                        captureScreenShot('sign_classification')
+                        setTimeout(function() {
+                            captureWebcam('sign_classification');
+                        }, 100);
                     }
                     break;
                 case 205:
-                    reset_sign_classification()
+                    reset_sign_classification();
                     break;
                 default:
-                    console.log(response['log'])
+                    console.log(response['log']);
             }      
         }
     })
@@ -86,7 +88,6 @@ function send_frame_rand_sign_classification(dataFrame) {
             let error_message;
             switch (status) {
                 case 200:
-                    console.log(response)
                     if (response['status']) {
                         $('#input_rand_sign_classification').attr('value', response['sign_label']);
                     }
@@ -105,15 +106,15 @@ function send_frame_rand_sign_classification(dataFrame) {
                     }
                     
                     if (start_capturing_and_requesting) {
-                        captureScreenShot('rand_sign_classification');
+                        captureWebcam('rand_sign_classification');
                     }
 
                     break;
                 case 205:
-                    reset_sign_classification()
+                    reset_rand_sign_classification();
                     break;
                 default:
-                    console.log(response['log'])
+                    console.log(response['log']);
             }      
         }
     });
