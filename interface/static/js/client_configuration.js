@@ -15,7 +15,6 @@ function initJitsi() {
     $("#div_iframe_jitsi").height(height_window);
 }
 
-// TODO: Remove deprecated lines
 function init_jitsi_config() {
     
     disable_debug_panel()
@@ -33,16 +32,6 @@ function init_jitsi_config() {
             captureWebcam('sign_classification');
         }, 2000);
 
-        // for (var b in window) {
-        //     if (b === 'api_jitsi') {
-        //         api_jitsi.isVideoAvailable().then(available => {
-        //             if (api_jitsi.getParticipantsInfo().length !== 0) {
-        //                 start_capturing_and_requesting = true;
-        //                 captureScreenShot('sign_classification');
-        //             }
-        //         })
-        //     }
-        // }
     })
     
     $("#btn_start_rand_comparing").click(function() {
@@ -58,18 +47,6 @@ function init_jitsi_config() {
             captureWebcam('rand_sign_classification');
         }, 2000);
 
-        // for (var b in window) {
-        //     if (b === 'api_jitsi') {
-        //         api_jitsi.isVideoAvailable().then(available => {
-        //             if (api_jitsi.getParticipantsInfo().length !== 0) {
-        //                 start_capturing_and_requesting = true;
-        //                 class_number = Math.floor(Math.random() * 10);
-        //                 send_sign_label(class_number);
-        //                 captureScreenShot('rand_sign_classification');
-        //             }
-        //         })
-        //     }
-        // }
     })
 
     $("#btn_stop_comparing").click(function() {
@@ -153,19 +130,6 @@ function getWebcamDataURL() {
     return canvas.toDataURL();
     
 }
-
-// TODO: Remove deprecated function
-// function captureScreenShot(which_application) {
-//     let screenShot = api_jitsi.captureLargeVideoScreenshot().then(dataURL => {
-//         let dataFrame = dataURL.dataURL
-
-//         if (which_application === 'sign_classification') {
-//             send_frame_sign_classification(dataFrame);
-//         } else if (which_application === 'rand_sign_classification') {
-//             send_frame_rand_sign_classification(dataFrame)
-//         }
-//     });
-// }
 
 function enable_debug_panel(){
     $("#debugging_panel").prop("hidden", false)
