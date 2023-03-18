@@ -28,15 +28,13 @@
         </div>
     </div>
 
-    <div id="webcam-popup" class="ui-widget-content" hidden>
-        <video id="webcam-video" autoplay></video>
-        <button id="close-webcam-popup">x</button>
-    </div>
+    {% include "webcam_popup.html" %}
+    {% include "notification_popup.html" %}
 
     <script>
         $(document).ready(function () {
             toggle_activate_bootstrap() // Bootstrap
-            init_jitsi_config() // Jitsi Init
+            init_config() // Init client_configuration.js
             
         })
     </script>
