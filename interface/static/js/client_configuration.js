@@ -98,10 +98,36 @@ function init_config() {
     });
 }
 
-function show_notification(text) {
-    // TODO: Add a highlighting text indicator for show_notification
+function show_notification(message) {
+    // DISCUSS: Cleaner implementation for show_notification
+    var duration = NOTIFICATION_DURATION;
+    var text = [
+        $('<span></span>'), 
+        $('<span></span>'), 
+        $('<span id="counter"></span>'), 
+        $('<span></span>')
+    ];
+
+    text[0].css('color', 'white').text(message[0] + ' ');
+    text[1].css('color', 'yellow').text(message[1] + ' ');
+    text[2].css('color', 'yellow').text('(30) ');
+    text[3].css('color', 'white').text(message[2]);
+
+    $('.notification-text').append(text[0], text[1], text[2], text[3]);
+
     $('.notification-container').show();
-    $('.notification-text').text(text);
+    
+    var timer = setInterval(function() {
+        text[2].text(' (' + duration + ') ');
+
+        duration--;
+        
+        if (duration < 0) {
+            hide_notification();
+            clearInterval(timer);
+        }
+    }, 1000) // 1 second in milliseconds
+    
 }
 
 function hide_notification() {

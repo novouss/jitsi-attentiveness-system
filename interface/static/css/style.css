@@ -14,7 +14,7 @@ input {
     background-color: #000000 !important;
 }
 
-a p .p-status {
+a, p, .p-status {
     color: #FFFFFF
 }
 
@@ -60,6 +60,7 @@ a p .p-status {
 }
 
 .notification {
+    opacity: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,7 +70,7 @@ a p .p-status {
     animation: slide-up 0.3s ease-in-out;
 }
 
-.notification-text {
+.notification-text > * {
     flex: 1;
     color: #FFFFFF;
     white-space: nowrap;
