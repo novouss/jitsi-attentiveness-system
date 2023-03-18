@@ -2,6 +2,22 @@ body {
     background-color: #2F2F2F;
 }
 
+label {
+    color: #F2F3F4;
+}
+
+input {
+    text-align: right;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #000000 !important;
+}
+
+a p .p-status {
+    color: #FFFFFF
+}
+
 .container-fluid {
     padding: 0;
     margin: 0;
@@ -14,7 +30,7 @@ body {
     z-index: 999;
     width: 300px;
     height: 225px;
-    background-color: white;
+    background-color: #000000;
 }
   
 #webcam-popup video {
@@ -28,31 +44,48 @@ body {
     right: 5px;
     border: none;
     background-color: transparent;
-    color: white;
+    color: #FFFFFF;
     font-weight: bold;
     cursor: pointer;
 }
 
-label {
-    color: #F2F3F4;
+.notification-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-input {
-    text-align: right;
+.notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    padding: 16px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+    animation: slide-up 0.3s ease-in-out;
 }
 
-.nav-pills .nav-link.active {
-    background-color: #000000 !important;
+.notification-text {
+    flex: 1;
+    color: #FFFFFF;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-a {
-    color: #FFFFFF
+.close-notification-btn {
+    font-size: 20px;
+    cursor: pointer;
 }
 
-p {
-    color: #FFFFFF
-}
-
-.p-status {
-    color: #F2F3F4
+@keyframes slide-up {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
