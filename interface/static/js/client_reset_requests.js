@@ -1,4 +1,13 @@
 
+function reset_requests() {
+    reset_sign_classification();
+    reset_rand_sign_classification();
+}
+
+function reset_capture_mode() {
+    capture_mode = null;
+}
+
 function reset_sign_classification() {
     
     $.ajax({
@@ -42,8 +51,8 @@ function reset_rand_sign_classification() {
                 case 200:
                     $('#input_rand_sign_classification').attr('value', "");
                     $('#input_rand_sign_classification').css({
-                        "background-color": "red",
-                        "color": "white",
+                        "background-color": "white",
+                        "color": "black",
                     });
                     break;
                 default:

@@ -38,7 +38,7 @@ a, p, .p-status {
     height: 100%;
 }
 
-#close-webcam-popup {
+#close-webcam-btn {
     position: absolute;
     top: 5px;
     right: 5px;

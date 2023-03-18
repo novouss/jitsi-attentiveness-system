@@ -16,7 +16,6 @@ function initJitsi() {
 }
 
 function captureWebcam(application) {
-    
     const dataURL = getWebcamDataURL();
 
     if (application === 'sign_classification') {
@@ -48,38 +47,23 @@ function init_config() {
     hide_notification();
     initJitsi();
 
-    $('#btn_start_comparing').click(function() {
-        // Enable user Webcam
-        enable_floating_webcam();
-        
-        // The captureWebcam function loads before the webcam could be enable.
-        // Wait for 2 seconds to make sure video is loaded.
-        setTimeout(function() {
-            // Run sign_recognition
-            start_capturing_and_requesting = true;
-            captureWebcam('sign_classification');
-        }, WEBCAM_WAIT_TIME);
+    start_capturing_and_requesting = false;
 
+    $('#btn_start_comparing').click(function() { 
+        start_capturing_and_requesting = true;
+        enable_floating_webcam('sign_classification');
     })
     
     $('#btn_start_rand_comparing').click(function() {
-        // Enable user Webcam
-        enable_floating_webcam();
-
-        // Wait for 2 seconds to make sure video is loaded.
-        setTimeout(function() {
-            // Run rand_sign_classification
-            start_capturing_and_requesting = true;
-            class_number = Math.floor(Math.random() * 10);
-            send_sign_label(class_number);
-            captureWebcam('rand_sign_classification');
-        }, WEBCAM_WAIT_TIME);
-
+        start_capturing_and_requesting = true;
+        class_number = Math.floor(Math.random() * 10);
+        send_sign_label(class_number);
+        enable_floating_webcam('rand_sign_classification');
     })
 
     $('#btn_stop_comparing').click(function() {
-        reset_sign_classification();
         start_capturing_and_requesting = false;
+        reset_sign_classification();
         disable_floating_webcam();
     })    
     
@@ -92,8 +76,7 @@ function init_config() {
     // Webcam Properties
     $('#webcam-popup').draggable();
     $('#close-webcam-popup').click(function() {
-        reset_sign_classification();
-        reset_rand_sign_classification();
+        reset_requests();
         disable_floating_webcam();
     });
 }
@@ -134,7 +117,9 @@ function hide_notification() {
     $('.notification-container').hide();
 }
 
-function enable_floating_webcam() {
+function enable_floating_webcam(mode) {
+    $('#webcam-popup').prop('hidden', false);
+    
     // FIXME: There's a bug that the draggable webcam does not update upon resize, or has no maximum bounding box.
     navigator.mediaDevices.getUserMedia({ video: true })
     .then(function(stream) {
@@ -143,6 +128,12 @@ function enable_floating_webcam() {
         video.srcObject = stream;
         video.onloadedmetadata = function(e) {
             video.play();
+            
+            if (mode == null) {
+                return;
+            }
+            
+            captureWebcam(mode);
         };
     })
     .catch(function(err) {
@@ -151,7 +142,7 @@ function enable_floating_webcam() {
 }
 
 function disable_floating_webcam() {
-    $('#webcam-popup').hide();
+    $('#webcam-popup').prop('hidden', true);
 
     const video = document.getElementById('webcam-video');
     const mediaStream = video.srcObject;
