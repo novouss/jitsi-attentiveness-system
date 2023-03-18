@@ -52,26 +52,26 @@ function init_config() {
     $('#btn_start_comparing').click(function() { 
         start_capturing_and_requesting = true;
         enable_floating_webcam('sign_classification');
-    })
+    });
     
     $('#btn_start_rand_comparing').click(function() {
         start_capturing_and_requesting = true;
         class_number = Math.floor(Math.random() * 10);
         send_sign_label(class_number);
         enable_floating_webcam('rand_sign_classification');
-    })
+    });
 
     $('#btn_stop_comparing').click(function() {
         start_capturing_and_requesting = false;
-        reset_sign_classification();
+        reset_requests();
         disable_floating_webcam();
-    })    
+    });   
     
     $('#btn_stop_rand_comparing').click(function() {
-        reset_rand_sign_classification();
         start_capturing_and_requesting = false;
+        reset_requests();
         disable_floating_webcam();
-    })
+    });
 
     // Webcam Properties
     $('#webcam-popup').draggable();
@@ -162,3 +162,7 @@ function enable_debug_panel(){
 function disable_debug_panel(){
     $('#debugging_panel').prop('hidden', true)
 }
+
+// TODO: Create a function that creates a notification that instructs the user to perform a task, else they're marked failed.
+// TODO: Remove legacy code, use web browser console for applications.
+// TODO: Remove all code related to close-btn.

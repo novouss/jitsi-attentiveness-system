@@ -4,9 +4,6 @@ function reset_requests() {
     reset_rand_sign_classification();
 }
 
-function reset_capture_mode() {
-    capture_mode = null;
-}
 
 function reset_sign_classification() {
     
