@@ -44,8 +44,14 @@ function show_notification(message) {
 }
 
 function hide_notification() {
-    $('.notification-container').hide();
-    $('.notification-text').find('span').remove();
+    $('.notification').removeClass('slide-up').addClass('slide-down');
+    
+    setTimeout(function() {
+        $('.notification').removeClass('slide-down');
+        $('.notification-container').hide();
+        $('.notification-text').find('span').remove();
+        
+    }, 300); // 0.3 seconds (Refer to styles.css)
 }
 
 function start_timer(duration) {

@@ -70,6 +70,10 @@ a, p, .p-status {
     animation: slide-up 0.3s ease-in-out;
 }
 
+.notification.slide-down {
+    animation: slide-down 0.3s ease-in-out;
+}
+
 .notification-text > * {
     flex: 1;
     color: #FFFFFF;
@@ -88,5 +92,13 @@ a, p, .p-status {
     }
     to {
         transform: translateY(0);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(0);
+    } to {
+        transform: translateY(100%);
     }
 }
