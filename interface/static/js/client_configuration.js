@@ -22,36 +22,8 @@ function init_config() {
 
     start_capturing_and_requesting = false;
 
-    // $('#btn_start_comparing').click(function() { 
-    //     enable_floating_webcam('sign_classification');
-    // });
-    
-    // $('#btn_start_rand_comparing').click(function() {
-    //     start_capturing_and_requesting = true;
-    //     class_number = Math.floor(Math.random() * 10);
-    //     message = ['Please perform a ', send_sign_label(class_number), 'with your hand.'];
-    //     show_notification(message);
-    //     enable_floating_webcam('rand_sign_classification');
-    // });
-
-    // $('#btn_stop_comparing').click(function() {
-    //     start_capturing_and_requesting = false;
-    //     reset_requests();
-    //     disable_floating_webcam();
-    // });   
-    
-    // $('#btn_stop_rand_comparing').click(function() {
-    //     start_capturing_and_requesting = false;
-    //     reset_requests();
-    //     disable_floating_webcam();
-    // });
-
     // Webcam Properties
     $('#webcam-popup').draggable();
-    $('#close-webcam-popup').click(function() {
-        reset_requests();
-        disable_floating_webcam();
-    });
 }
 
 function show_notification(message) {
@@ -116,7 +88,7 @@ function sign_attentiveness(dataFrame) {
     
     send_sign_classification(dataFrame)
     .then(function(results) {
-        
+
         if (parseInt(results['sign_class']) === class_number) {
             $('#action').css('color', 'lime');
             $('#counter').css('color', 'lime');
