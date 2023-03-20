@@ -10,8 +10,15 @@
         <!-- Jitsi runs here -->
     </div>
 
-    {% include "webcam_popup.html" %}
-    {% include "notification_popup.html" %}
+    <div id="webcam-popup" class="ui-widget-content" hidden>
+        <video id="webcam-video" autoplay></video>
+    </div>
+    
+    <div class="notification-container">
+        <div class="notification">
+            <span class="notification-text"></span>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function () {
