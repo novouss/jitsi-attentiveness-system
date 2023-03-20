@@ -22,7 +22,6 @@ function init_config() {
 
     start_capturing_and_requesting = false;
 
-    // Webcam Properties
     $('#webcam-popup').draggable();
 }
 
@@ -51,22 +50,28 @@ function hide_notification() {
         $('.notification-container').hide();
         $('.notification-text').find('span').remove();
         
-    }, 300); // 0.3 seconds (Refer to styles.css)
+    }, 500); // 0.5 seconds (Refer to styles.css)
 }
 
-function start_timer(duration) {
-    
-    let timer = setInterval(function() {
+function start_notification_timer(duration) {
+    timer = setInterval(function() {
         const counter = $('#counter');
         counter.text(' (' + duration + ') ');
 
         duration--;
 
         if (duration < 0) {
+            $('#action').css('color', 'red');
+            $('#counter').css('color', 'red');
             hide_notification();
+            disable_floating_webcam();
             clearInterval(timer);
         }
     }, 1000) // 1 second in milliseconds
+}
+
+function stop_notification_timer() {
+    clearInterval(timer);
 }
 
 function start_sign_classification(dataFrame) {
@@ -98,10 +103,10 @@ function sign_attentiveness(dataFrame) {
         if (parseInt(results['sign_class']) === class_number) {
             $('#action').css('color', 'lime');
             $('#counter').css('color', 'lime');
-            // TODO: Add stop_timer function
-            // TODO: Add disappearing notification
             start_capturing_and_requesting = false;
             disable_floating_webcam();
+            stop_notification_timer();
+            hide_notification();
         }
     
         if (start_capturing_and_requesting) {
@@ -127,6 +132,7 @@ function start_sign_attentiveness(number) {
     .then(function(sign_label) {
         var messages = ['Please perform a ', sign_label, 'with your hand.'];
         show_notification(messages);
+        start_notification_timer(NOTIFICATION_DURATION);
     })
     .catch(function(error) {
         console.log(error);
