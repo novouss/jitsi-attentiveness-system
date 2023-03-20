@@ -55,8 +55,8 @@ def get_sign_label():
 	try:      
 		if 'number' in request.form.keys():
 
-			index = request.form['number']
-			label = sign_recognition.get_class_labels(int(index))                        
+			index = int(request.form['number']);
+			label = sign_recognition.get_class_labels(index);                        
 
 			content = {
 				'log': 'Sign Label Identified',
