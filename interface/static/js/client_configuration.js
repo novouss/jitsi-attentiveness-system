@@ -80,7 +80,7 @@ function start_sign_classification(dataFrame) {
     if (start_capturing_and_requesting) {
         setTimeout(function() {
             capture_webcam('sign_classification');
-        }, 1000);
+        }, 500);
     }
 }
 
@@ -101,7 +101,7 @@ function sign_attentiveness(dataFrame) {
         if (start_capturing_and_requesting) {
             setTimeout(function() {
                 capture_webcam('sign_attentiveness_classification');
-            }, 1000);
+            }, 500);
         }
     })
     .catch(function(error) {
