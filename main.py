@@ -130,3 +130,4 @@ def reset_sign_classification():
 
 if __name__ == '__main__':
 	app.run()
+	

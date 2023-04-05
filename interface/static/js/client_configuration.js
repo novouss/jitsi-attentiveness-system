@@ -21,8 +21,16 @@ function init_config() {
     initJitsi();
 
     start_capturing_and_requesting = false;
+    attentiveness = false;
 
     $('#webcam-popup').draggable();
+
+    let fileContent = localStorage.getItem(FILE_KEY);
+    // If the file doesn't exist, create it with an empty string as its content
+    if (fileContent === null) {
+        localStorage.setItem(FILE_KEY, '');
+        fileContent = '';
+    }
 }
 
 function show_notification(message) {
@@ -99,20 +107,21 @@ function sign_attentiveness(dataFrame) {
     
     send_sign_classification(dataFrame)
     .then(function(results) {
-
+        
         if (parseInt(results['sign_class']) === class_number) {
             $('#action').css('color', 'lime');
             $('#counter').css('color', 'lime');
             start_capturing_and_requesting = false;
+            attentiveness = true;
             disable_floating_webcam();
             stop_notification_timer();
             hide_notification();
         }
-    
+        
         if (start_capturing_and_requesting) {
             setTimeout(function() {
                 capture_webcam('sign_attentiveness_classification');
-            }, 500);
+            }, 1000);
         }
     })
     .catch(function(error) {
@@ -123,11 +132,11 @@ function sign_attentiveness(dataFrame) {
 function start_sign_attentiveness(number) {
 
     class_number = number;
-
+    
     if (number == null) {
         class_number = Math.floor(Math.random() * 10);
     }
-
+    
     send_sign_label(class_number)
     .then(function(sign_label) {
         var messages = ['Please perform a ', sign_label, 'with your hand.'];
@@ -137,6 +146,27 @@ function start_sign_attentiveness(number) {
     .catch(function(error) {
         console.log(error);
     });
+    
+    $('.webcam-text').click(function() {
+        enable_floating_webcam('sign_attentiveness_classification');
+    });
+    
+}
 
-    enable_floating_webcam('sign_attentiveness_classification');
+function start(time) {
+    if (time == null) {
+        time = Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER)) + MIN_TIMER;
+    }
+    setTimeout(start_sign_attentiveness, time * 60000);
+    record_log((attentiveness) ? "Successful" : "Failed");
+    attentiveness = false;
+}
+
+function record_log(status) {
+    user = api_jitsi.getParticipantsInfo();
+    dateTime = new Date();
+    fileContent = localStorage.getItem(FILE_KEY);
+    timestamp = dateTime.toLocaleString();
+    time_save = `${timestamp}, ${user[0]['displayName']}, ${status}\n`;
+    localStorage.setItem(FILE_KEY, fileContent + "\n" + time_save);
 }

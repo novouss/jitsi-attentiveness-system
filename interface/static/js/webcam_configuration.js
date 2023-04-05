@@ -49,11 +49,16 @@ function disable_floating_webcam() {
 
     const video = document.getElementById('webcam-video');
     const mediaStream = video.srcObject;
-    const tracks = mediaStream.getTracks();
+    
+    if (mediaStream) {
+        const tracks = mediaStream.getTracks();
 
-    tracks.forEach(function(track) {
-        track.stop();
-    });
+        if (tracks.length > 0) {
+            tracks.forEach(function(track) {
+                track.stop();
+            });
+        }
+    }
 
     video.srcObject = null;
 }
