@@ -1,10 +1,10 @@
 
 function initJitsi() {
-    var rand = Math.floor(Math.random() * 10000000) + 100000;
+    // var rand = Math.floor(Math.random() * 10000000) + 100000;
 
     const domain = 'meet.jit.si';
     const options = {
-        roomName: 'Room_' + rand.toString(),
+        roomName: 'Room_1113000',
         parentNode: document.querySelector('#div_iframe_jitsi'),
     };
 
@@ -31,6 +31,24 @@ function init_config() {
         localStorage.setItem(FILE_KEY, '');
         fileContent = '';
     }
+    
+    let timeoutId;
+
+    function start() {
+        const time = Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER)) + MIN_TIMER;
+        timeoutId = setTimeout(() => {
+            start_sign_attentiveness();
+            record_log((attentiveness) ? "Successful" : "Failed");
+            attentiveness = false;
+            start(); // Start a new timer for the next notification
+        }, time * 60000);
+      }
+    api_jitsi.addListener('videoConferenceJoined', () => {
+        clearTimeout(timeoutId);
+        const time = Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER)) + MIN_TIMER;
+        start(time);
+    });
+
 }
 
 function show_notification(message) {
@@ -58,7 +76,7 @@ function hide_notification() {
         $('.notification-container').hide();
         $('.notification-text').find('span').remove();
         
-    }, 500); // 0.5 seconds (Refer to styles.css)
+    }, 1000); // 1 second (Refer to styles.css)
 }
 
 function start_notification_timer(duration) {
@@ -153,14 +171,6 @@ function start_sign_attentiveness(number) {
     
 }
 
-function start(time) {
-    if (time == null) {
-        time = Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER)) + MIN_TIMER;
-    }
-    setTimeout(start_sign_attentiveness, time * 60000);
-    record_log((attentiveness) ? "Successful" : "Failed");
-    attentiveness = false;
-}
 
 function record_log(status) {
     user = api_jitsi.getParticipantsInfo();

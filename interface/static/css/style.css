@@ -72,7 +72,7 @@ a, p, .p-status {
 }
 
 .notification.slide-down {
-    animation: slide-down 0.5s ease-in-out;
+    animation: slide-down 1s ease-in-out;
 }
 
 .notification-text > span {
