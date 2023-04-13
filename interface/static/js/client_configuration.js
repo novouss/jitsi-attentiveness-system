@@ -1,10 +1,10 @@
 
-function initJitsi() {
+function initJitsi(meet_number) {
     // var rand = Math.floor(Math.random() * 10000000) + 100000;
 
     const domain = 'meet.jit.si';
     const options = {
-        roomName: 'Room_1113000',
+        roomName: 'Room_' + meet_number,
         parentNode: document.querySelector('#div_iframe_jitsi'),
     };
 
@@ -17,8 +17,10 @@ function initJitsi() {
 
 function init_config() {
     
+    let meet_number = prompt("Please enter your Jitsi Meet Number");
+
     hide_notification();
-    initJitsi();
+    initJitsi(meet_number);
 
     start_capturing_and_requesting = false;
     attentiveness = false;
@@ -89,7 +91,7 @@ function start_notification_timer(duration) {
         if (duration < 0) {
             $('#action').css('color', 'red');
             $('#counter').css('color', 'red');
-            hide_notification();
+            // hide_notification();
             disable_floating_webcam();
             clearInterval(timer);
         }
@@ -133,7 +135,7 @@ function sign_attentiveness(dataFrame) {
             attentiveness = true;
             disable_floating_webcam();
             stop_notification_timer();
-            hide_notification();
+            // hide_notification();
         }
         
         if (start_capturing_and_requesting) {
