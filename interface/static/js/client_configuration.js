@@ -47,8 +47,7 @@ function init_config() {
       }
     api_jitsi.addListener('videoConferenceJoined', () => {
         clearTimeout(timeoutId);
-        const time = Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER)) + MIN_TIMER;
-        start(time);
+        start();
     });
 
 }
@@ -91,7 +90,7 @@ function start_notification_timer(duration) {
         if (duration < 0) {
             $('#action').css('color', 'red');
             $('#counter').css('color', 'red');
-            // hide_notification();
+            hide_notification();
             disable_floating_webcam();
             clearInterval(timer);
         }
