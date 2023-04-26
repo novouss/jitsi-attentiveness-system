@@ -134,7 +134,7 @@ function sign_attentiveness(dataFrame) {
             attentiveness = true;
             disable_floating_webcam();
             stop_notification_timer();
-            // hide_notification();
+            hide_notification();
         }
         
         if (start_capturing_and_requesting) {
